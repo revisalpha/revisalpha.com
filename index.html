@@ -1,9 +1,612 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<title>RevisAlpha</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RevisAlpha | Soluções Financeiras</title>
+  <meta name="description" content="Reduza juros abusivos e recupere o controle financeiro com análise especializada, atendimento consultivo e orientação clara." />
+  <meta name="theme-color" content="#07124a" />
+  <style>
+    :root {
+      --bg: #050b35;
+      --bg-soft: #0b1550;
+      --card: rgba(255,255,255,0.06);
+      --line: rgba(255,255,255,0.10);
+      --text: #eef2ff;
+      --muted: #c5cce8;
+      --gold: #d8b24a;
+      --gold-soft: #f3d67b;
+      --shadow: 0 18px 60px rgba(0,0,0,.30);
+      --radius: 24px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(216,178,74,.18), transparent 26%),
+        radial-gradient(circle at 90% 10%, rgba(216,178,74,.14), transparent 18%),
+        linear-gradient(180deg, #04092b 0%, #07124a 42%, #050b35 100%);
+      line-height: 1.55;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(calc(100% - 32px), var(--max)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(5,11,53,.78);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .nav {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 800;
+      letter-spacing: .3px;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+      color: #111827;
+      font-size: 24px;
+      box-shadow: 0 10px 24px rgba(216,178,74,.28);
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .menu {
+      display: flex;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .menu a:hover { color: white; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: .25s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+      color: #141414;
+      box-shadow: 0 16px 34px rgba(216,178,74,.24);
+    }
+
+    .btn-primary:hover,
+    .btn-secondary:hover { transform: translateY(-2px); }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.04);
+      color: white;
+      border-color: rgba(255,255,255,.14);
+    }
+
+    .hero { padding: 74px 0 38px; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(216,178,74,.28);
+      background: rgba(216,178,74,.10);
+      color: #f7df95;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(38px, 5vw, 64px);
+      line-height: 1.03;
+      letter-spacing: -1.7px;
+    }
+
+    .highlight {
+      background: linear-gradient(135deg, #fff4c2 0%, #f4d36a 55%, #cea53b 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 710px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .hero-tags {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .hero-tags span,
+    .trust-item,
+    .card,
+    .step,
+    .faq-item,
+    .cta-box,
+    .hero-panel,
+    .pain-box {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-tags span {
+      padding: 10px 14px;
+      color: var(--muted);
+      font-size: 14px;
+      border-radius: 999px;
+    }
+
+    .hero-panel {
+      padding: 26px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: -70px auto auto -70px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(216,178,74,.24), transparent 68%);
+      pointer-events: none;
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+      margin-bottom: 18px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border: 1px solid rgba(255,255,255,.07);
+      text-align: center;
+      padding: 26px;
+    }
+
+    .logo-box strong {
+      display: block;
+      font-size: 42px;
+      color: var(--gold-soft);
+      line-height: 1;
+      margin-bottom: 10px;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .logo-box span {
+      display: block;
+      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    .grid-3, .grid-4, .steps, .faq, .trust-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .steps { grid-template-columns: repeat(4, 1fr); }
+    .trust-grid { grid-template-columns: repeat(3, 1fr); }
+
+    .section { padding: 48px 0; }
+
+    .section-head {
+      max-width: 760px;
+      margin-bottom: 26px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 3.5vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -1.2px;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .card,
+    .step,
+    .faq-item,
+    .pain-box,
+    .cta-box {
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3,
+    .step h3,
+    .faq-item h3,
+    .pain-box h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .card p,
+    .step p,
+    .faq-item p,
+    .pain-box p,
+    .trust-item p,
+    .cta-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(216,178,74,.22), rgba(216,178,74,.10));
+      border: 1px solid rgba(216,178,74,.24);
+      color: #fae69e;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .step-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+      color: #141414;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .trust-item {
+      padding: 24px;
+    }
+
+    .trust-item strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .faq { grid-template-columns: 1fr 1fr; }
+
+    .cta-box {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .cta-box h2 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 3.3vw, 42px);
+      line-height: 1.08;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    footer {
+      padding: 26px 0 40px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 18px;
+    }
+
+    .floating-wa {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 60;
+    }
+
+    .floating-wa a {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #25D366;
+      color: white;
+      font-size: 26px;
+      box-shadow: 0 16px 30px rgba(37,211,102,.35);
+    }
+
+    @media (max-width: 1040px) {
+      .hero-grid, .cta-box, .grid-4, .steps, .trust-grid, .faq { grid-template-columns: 1fr 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .menu { display: none; }
+    }
+
+    @media (max-width: 720px) {
+      .hero { padding-top: 48px; }
+      .hero-grid, .grid-4, .steps, .trust-grid, .faq, .cta-box { grid-template-columns: 1fr; }
+      .hero p, .section-head p { font-size: 16px; }
+      .btn { width: 100%; }
+      .hero-actions { flex-direction: column; }
+      .brand small { display: none; }
+      .logo-box strong { font-size: 34px; }
+    }
+  </style>
 </head>
 <body>
-<h1>RevisAlpha no ar 🚀</h1>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#inicio">
+        <div class="brand-mark">R</div>
+        <div>
+          RevisAlpha
+          <small>Soluções Financeiras</small>
+        </div>
+      </a>
+      <nav class="menu">
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#diferenciais">Diferenciais</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <a class="btn btn-primary" href="https://wa.me/5511925017061?text=Ol%C3%A1%2C%20quero%20analisar%20meu%20contrato." target="_blank" rel="noopener">Quero analisar meu contrato</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Atendimento consultivo • análise técnica • orientação clara</div>
+          <h1>Reduza <span class="highlight">juros abusivos</span> e recupere o controle financeiro com análise especializada.</h1>
+          <p>Atendimento consultivo, análise técnica e orientação clara para quem quer entender seu contrato e avaliar possíveis cobranças abusivas com mais segurança.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://wa.me/5511925017061?text=Ol%C3%A1%2C%20quero%20analisar%20meu%20contrato." target="_blank" rel="noopener">Quero analisar meu contrato</a>
+            <a class="btn btn-secondary" href="#como-funciona">Entender como funciona</a>
+          </div>
+          <div class="hero-tags">
+            <span>Atendimento rápido</span>
+            <span>Análise especializada</span>
+            <span>Sigilo total</span>
+          </div>
+        </div>
+
+        <aside class="hero-panel">
+          <div class="logo-box">
+            <div>
+              <strong>RevisAlpha</strong>
+              <span>Soluções Financeiras</span>
+            </div>
+          </div>
+          <div class="pain-box">
+            <h3>Você está passando por alguma dessas situações?</h3>
+            <p>Parcelas altas demais, dúvidas sobre juros, sensação de estar pagando além do justo, falta de clareza sobre o contrato ou insegurança para decidir os próximos passos.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Como a RevisAlpha pode te ajudar</h2>
+          <p>Ajudamos você a compreender o contrato, identificar possíveis cobranças abusivas e receber orientação clara para tomar a melhor decisão.</p>
+        </div>
+        <div class="grid-3">
+          <article class="card">
+            <div class="icon">⚖</div>
+            <h3>Análise técnica</h3>
+            <p>Leitura especializada do contrato para identificar pontos de atenção, encargos e possíveis excessos.</p>
+          </article>
+          <article class="card">
+            <div class="icon">🔎</div>
+            <h3>Clareza sobre o cenário</h3>
+            <p>Explicação objetiva, sem linguagem complicada, para você entender melhor sua situação financeira.</p>
+          </article>
+          <article class="card">
+            <div class="icon">🤝</div>
+            <h3>Orientação consultiva</h3>
+            <p>Atendimento próximo e estratégico para que você avalie seus próximos passos com mais segurança.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="como-funciona">
+      <div class="container">
+        <div class="section-head">
+          <h2>Como funciona</h2>
+          <p>Uma jornada simples para transformar sua dúvida em entendimento claro e orientação prática.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Você entra em contato</h3>
+            <p>Fale com a RevisAlpha pelo WhatsApp e apresente seu caso de forma rápida.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Envia as informações</h3>
+            <p>Você recebe orientação sobre os dados e documentos necessários para uma análise mais precisa.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Fazemos a análise</h3>
+            <p>A RevisAlpha avalia o contrato e verifica possíveis excessos e pontos relevantes do cenário.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Você recebe orientação</h3>
+            <p>Retorno claro, objetivo e consultivo para apoiar sua tomada de decisão.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="diferenciais">
+      <div class="container">
+        <div class="section-head">
+          <h2>Por que escolher a RevisAlpha</h2>
+          <p>Uma presença profissional, séria e confiável para quem procura clareza, orientação e segurança.</p>
+        </div>
+        <div class="trust-grid">
+          <div class="trust-item">
+            <strong>Atendimento humanizado</strong>
+            <p>Contato próximo e acolhedor para entender seu contexto com atenção.</p>
+          </div>
+          <div class="trust-item">
+            <strong>Análise especializada</strong>
+            <p>Abordagem técnica para avaliar contratos e identificar possíveis excessos.</p>
+          </div>
+          <div class="trust-item">
+            <strong>Comunicação clara</strong>
+            <p>Explicação objetiva para você compreender sua situação sem complicação.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Compromisso com clareza, seriedade e confiança</h2>
+          <p>Na RevisAlpha, cada atendimento é conduzido com responsabilidade, transparência e foco em orientação séria, sem promessas exageradas e com total cuidado com as informações do cliente.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <h2>Perguntas frequentes</h2>
+          <p>Respostas rápidas para reduzir dúvidas antes do primeiro contato.</p>
+        </div>
+        <div class="faq">
+          <div class="faq-item">
+            <h3>Como faço para iniciar?</h3>
+            <p>Basta clicar no botão de WhatsApp e enviar uma mensagem para a RevisAlpha.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Preciso enviar documentos logo no primeiro contato?</h3>
+            <p>Não necessariamente. No primeiro atendimento você recebe a orientação sobre quais informações serão necessárias.</p>
+          </div>
+          <div class="faq-item">
+            <h3>O atendimento é online?</h3>
+            <p>Sim. Todo o processo pode ser feito de forma prática, rápida e online.</p>
+          </div>
+          <div class="faq-item">
+            <h3>As informações são tratadas com sigilo?</h3>
+            <p>Sim. O atendimento é conduzido com confidencialidade e cuidado com os dados do cliente.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contato">
+      <div class="container">
+        <div class="cta-box">
+          <div>
+            <h2>Fale agora com a RevisAlpha e entenda melhor seu contrato</h2>
+            <p>Receba atendimento consultivo, análise especializada e orientação clara para avaliar sua situação com mais segurança.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn btn-primary" href="https://wa.me/5511925017061?text=Ol%C3%A1%2C%20quero%20analisar%20meu%20contrato." target="_blank" rel="noopener">Falar com a RevisAlpha</a>
+            <a class="btn btn-secondary" href="mailto:revisalpha@gmail.com">revisalpha@gmail.com</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-wrap">
+      <div>© <span id="year"></span> RevisAlpha Soluções Financeiras. Todos os direitos reservados.</div>
+      <div>revisalpha.com • WhatsApp: (11) 92501-7061</div>
+    </div>
+  </footer>
+
+  <div class="floating-wa">
+    <a href="https://wa.me/5511925017061?text=Ol%C3%A1%2C%20quero%20analisar%20meu%20contrato." target="_blank" rel="noopener">✆</a>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
